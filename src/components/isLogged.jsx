@@ -4,8 +4,8 @@ import { usersState } from "../consts/persons";
 import { RegisterModal } from "./modal";
 
 export function IsLogged() {
-    const [isLogged, setIsLogged] = useState(usersState[0].userLogged)
-    const [users, setUsers] = useState(usersState[0].users)
+    const [isLogged, setIsLogged] = useState(usersState.userLogged)
+    const [users, setUsers] = useState(usersState.users)
     const [modalShow, setModalShow] = useState(false)
 
     return (
