@@ -1,23 +1,26 @@
 import { useState } from "react";
 import Button from "./button";
 import { usersState } from "../consts/persons";
-import { RegisterModal } from "./modal";
+import { RegisterModal, ModalLogin } from "./modals/modal";
 
 export function IsLogged() {
     const [isLogged, setIsLogged] = useState(usersState.userLogged)
-    const [users, setUsers] = useState(usersState.users)
-    const [modalShow, setModalShow] = useState(false)
+    const [modalRegisterShow, setModalRegisterShow] = useState(false)
+    const [modalLoginShow, setModalLoginShow] = useState(false)
+    const findUser = usersState.users.find(user => user.id === usersState.userLogged) || {}
 
     return (
-        <div>
-            <h1>{isLogged ? "logueado" : "no Logueado"}</h1>
+        <div className="grid gap-2">
+            {isLogged ? findUser.name : (
+                <Button name="Iniciar sesion" onClick={() => { setModalLoginShow(true), setModalRegisterShow(false) }} />
+            )}
             {isLogged ? (
                 <Button name="Cerrar Sesion" onClick={() => setIsLogged(false)} />
             ) : (
-                <Button name="Registrarse" onClick={() => { setModalShow(true) }} />
-            )
-            }
-            {modalShow ? <RegisterModal onClose={setModalShow} /> : null}
+                <Button name="Registrarse" onClick={() => { setModalRegisterShow(true), setModalLoginShow(false) }} />
+            )}
+            {modalRegisterShow ? <RegisterModal onClose={setModalRegisterShow} /> : null}
+            {modalLoginShow ? <ModalLogin onClose={setModalLoginShow} /> : null}
         </div>
     )
 }
