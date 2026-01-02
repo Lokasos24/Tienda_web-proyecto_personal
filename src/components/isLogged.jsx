@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { create } from "zustand";
 import Button from "./button";
 import { usersState } from "../consts/persons";
-import { RegisterModal, ModalLogin } from "./modals/modal";
+import { RegisterModal, LoginModal } from "./modals/modal";
 
 export function IsLogged() {
+    // const user
     const [isLogged, setIsLogged] = useState(usersState.userLogged)
     const [modalRegisterShow, setModalRegisterShow] = useState(false)
     const [modalLoginShow, setModalLoginShow] = useState(false)
@@ -20,7 +22,7 @@ export function IsLogged() {
                 <Button name="Registrarse" onClick={() => { setModalRegisterShow(true), setModalLoginShow(false) }} />
             )}
             {modalRegisterShow ? <RegisterModal onClose={setModalRegisterShow} /> : null}
-            {modalLoginShow ? <ModalLogin onClose={setModalLoginShow} /> : null}
+            {modalLoginShow ? <LoginModal onClose={setModalLoginShow} /> : null}
         </div>
     )
 }
