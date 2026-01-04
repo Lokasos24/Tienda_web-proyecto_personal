@@ -1,6 +1,6 @@
 import Button from "../button";
 import { useState } from "react";
-import { usersState } from "../../consts/persons";
+import { usersState, userLogged } from "../../consts/persons";
 import { Error } from "../errors";
 import "../../styles/modalAnimations.css";
 
@@ -14,10 +14,9 @@ export function RegisterModal({ onClose }) {
         email: '',
         phone: '',
         password: '',
+        car: [],
     })
     const [error, setError] = useState('')
-
-    console.log(usersState.users)
 
     function validateAll() {
         setError('')
@@ -39,8 +38,8 @@ export function RegisterModal({ onClose }) {
         return true
     }
 
-    const addUser = () => {
-        usersState.users.push(formUser)
+    const addUser = (formUser) => {
+        usersState.getState().register(formUser)
     }
 
     return (
@@ -103,11 +102,13 @@ export function RegisterModal({ onClose }) {
                         className="w-full py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/20 active:scale-95 transition-transform"
                         onClick={() => {
                             if (!validateAll()) return
-                            addUser()
+                            addUser(formUser)
                             onClose(false)
                         }}
                     />
-                    <Button name="Cancelar" onClick={() => onClose(false)} className={buttonStyle} />
+                    <Button name="Cancelar" 
+                    onClick={ () => onClose(false)} 
+                    className={buttonStyle} />
                     <Error showError={error} />
                 </div>
             </div>
@@ -121,20 +122,20 @@ export function LoginModal({ onClose }) {
         name: '',
         password: ''
     })
+    const getUsers = usersState.getState(state => state.users)
 
-    function validateUser() {
+    function validateUser(formUser, allUsers) {
+        console.log(users)
         setError('')
-        const findUser = usersState.users.find(user => user.name === formUser.name && user.password === formUser.password)
+        const findUser = allUsers.users.find(user => user.name === formUser.name && user.password === formUser.password)
         if (!findUser) return setError('Usuario no encontrado')
-        usersState.userLogged = findUser.id
+        userLogged.getState().logged(findUser.id)
     }
-    console.log(usersState.userLogged)
-    console.log(usersState.users)
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeIn top-96">
             <div className="bg-white w-[90%] max-w-112.5 p-10 rounded-3xl shadow-2xl relative flex flex-col gap-6 animate-slideUp">
-                <h1 className="text-3xl font-bold text-gray-900 text-center tracking-tight">Registrarse</h1>
+                <h1 className="text-3xl font-bold text-gray-900 text-center tracking-tight">Iniciar sesion</h1>
                 <form action="" id="register" className="flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
                         <label htmlFor="name" className="text-sm font-semibold text-gray-600 ml-1">Nombre</label>
@@ -160,7 +161,7 @@ export function LoginModal({ onClose }) {
                     <Button name="Iniciar sesion"
                         className="w-full py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/20 active:scale-95 transition-transform"
                         onClick={() => {
-                            if (!validateUser()) return
+                            if (!validateUser(formUser, getUsers)) return
                             onClose(false)
                         }}
                     />

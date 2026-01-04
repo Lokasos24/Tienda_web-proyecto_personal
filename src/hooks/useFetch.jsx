@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 export default function useFetch(url){
     const [values, setValues] = useState({
-        datas: [],
+        data: [],
         isLoading: true,
         err: ''
     })
@@ -12,7 +12,7 @@ export default function useFetch(url){
         fetch(url)
             .then(response => response.json(url))
             .then(data => {
-                setValues(prev => ({...prev, datas: data, isLoading: false}))
+                setValues(prev => ({...prev, data: data, isLoading: false}))
             })
             .catch(err => {
                 setValues(prev => ({...prev, err: `Un error a ocurrido ${err}`}))

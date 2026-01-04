@@ -1,5 +1,5 @@
 ---
-import { IsLogged } from "../components/isLogged";
+import { SessionUser } from "../components/sessionUser";
 ---
 
 <header
@@ -41,7 +41,7 @@ import { IsLogged } from "../components/isLogged";
             </nav>
             <div class="flex items-center space-x-4">
                 <div class="hidden md:block">
-                    <IsLogged client:load />
+                    <SessionUser client:load />
                 </div>
                 <button
                     id="mobile-menu-btn"
@@ -108,7 +108,7 @@ import { IsLogged } from "../components/isLogged";
                 >Contacto</a
             >
             <div class="px-3 py-2">
-                <IsLogged client:load />
+                <SessionUser client:load />
             </div>
         </div>
     </div>
