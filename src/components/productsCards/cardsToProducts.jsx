@@ -1,10 +1,26 @@
 import useFetch from "../../hooks/useFetch";
 import Buttons from "../button";
 import IsLoading from "../loading/isLoading";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { usersState } from "../../consts/persons";
 
 export function ProductsCards() {
     const url = `https://fakestoreapi.com/products`
     const products = useFetch(url)
+    const user = useCurrentUser()
+
+    function handleAddToCar(productId){
+        const foundProduct = products.data.find(product => product.id === productId)
+        const newCar = {
+            id: foundProduct.id, 
+            name: foundProduct.title,
+            price: foundProduct.price,
+            image: foundProduct.image,
+            cuantity: 1,
+        }
+        usersState.getState().addCar(user, newCar)
+        console.log(user.car)
+    }
 
     return (
         <section className="container mx-auto px-4 py-12">
@@ -33,7 +49,11 @@ export function ProductsCards() {
                                 <div className="mt-6">
                                     <Buttons
                                         name={"Agregar al Carrito"}
-                                        onClick={() => console.log("Agregado")}
+                                        key={product.id}
+                                        onClick={() => {
+                                            if(!user) return
+                                            handleAddToCar(product.id)
+                                        }}
                                         className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gray-900 hover:bg-gray-800 active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                                     />
                                 </div>

@@ -4,9 +4,9 @@ import { RegisterModal, LoginModal } from "./modals/modal";
 import { userLogged, usersState } from "../consts/persons";
 
 export function SessionUser() {
-    //Modals
     const [modalRegisterShow, setModalRegisterShow] = useState(false)
     const [modalLoginShow, setModalLoginShow] = useState(false)
+    
     const userId = userLogged(state => state.isLogged)
     const currentUser = usersState(state => state.users.find(user => user.id === userId))
 

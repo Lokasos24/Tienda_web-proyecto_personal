@@ -125,11 +125,11 @@ export function LoginModal({ onClose }) {
     const getUsers = usersState.getState(state => state.users)
 
     function validateUser(formUser, allUsers) {
-        console.log(users)
         setError('')
-        const findUser = allUsers.users.find(user => user.name === formUser.name && user.password === formUser.password)
+        const findUser = allUsers.users.find(user => user.name.toLowerCase() === formUser.name.toLowerCase() && user.password.toLowerCase() === formUser.password.toLowerCase())
         if (!findUser) return setError('Usuario no encontrado')
         userLogged.getState().logged(findUser.id)
+        onClose(false)
     }
 
     return (
@@ -162,7 +162,6 @@ export function LoginModal({ onClose }) {
                         className="w-full py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/20 active:scale-95 transition-transform"
                         onClick={() => {
                             if (!validateUser(formUser, getUsers)) return
-                            onClose(false)
                         }}
                     />
                     <Button name="Cancelar" onClick={() => onClose(false)} className={buttonStyle} />
