@@ -2,11 +2,12 @@ import useFetch from "../../hooks/useFetch";
 import Buttons from "../button";
 import IsLoading from "../loading/isLoading";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { usersState } from "../../consts/persons";
+import { usersState, dataApi } from "../../consts/persons";
 
 export function ProductsCards() {
     const url = `https://fakestoreapi.com/products`
-    const products = useFetch(url)
+    useFetch(url)
+    const products = dataApi.getState().products
     const user = useCurrentUser()
 
     function handleAddToCar(productId){
@@ -19,14 +20,13 @@ export function ProductsCards() {
             cuantity: 1,
         }
         usersState.getState().addCar(user, newCar)
-        console.log(user.car)
     }
 
     return (
         <section className="container mx-auto px-4 py-12">
             {products.isLoading ? <IsLoading /> :
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
-                {products.data?.map(product => {
+                {products?.map(product => {
                     return (
                         <div key={product.id} className="group flex flex-col w-full max-w-sm bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
                             <div className="relative pt-6 px-6 pb-2 flex justify-center items-center bg-gray-50 h-64 overflow-hidden group-hover:bg-gray-100 transition-colors duration-300">
