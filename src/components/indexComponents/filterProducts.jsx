@@ -3,10 +3,10 @@ import { dataApi } from "../../consts/persons"
 
 export function FilterProducts(){
 
-    const [inputValue, setInputValue] = useState('')
+    const [filters, setFilters] = useState('')
 
     function productsToFilter(){
-        dataApi.getState().filterProducts(inputValue)
+        dataApi.getState().filterFromProducts(inputValue)
     }
 
     return(
@@ -39,8 +39,8 @@ export function FilterProducts(){
                 <input
                     className="peer h-full w-full outline-none text-lg text-gray-700 pr-4 placeholder-gray-400"
                     type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    value={filters}
+                    onChange={(e) => setFilters(e.target.value)}
                     placeholder="Buscar productos, marcas, categorías..."
                 />
                 <button

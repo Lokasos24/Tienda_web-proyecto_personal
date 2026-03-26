@@ -1,18 +1,19 @@
 import { useState } from "react";
 import Button from "./button";
 import { RegisterModal, LoginModal } from "./modals/modal";
-import { userLogged, usersState } from "../consts/persons";
+import { userLogged } from "../consts/persons";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export function SessionUser() {
     const [modalRegisterShow, setModalRegisterShow] = useState(false)
     const [modalLoginShow, setModalLoginShow] = useState(false)
     
     const userId = userLogged(state => state.isLogged)
-    const currentUser = usersState(state => state.users.find(user => user.id === userId))
+    const currentUser = useCurrentUser()
 
     return (
         <div className="grid gap-2">
-            {userId ? currentUser.name : (
+            {userId ? currentUser.newUser.name : (
                 <Button name="Iniciar sesion" 
                 onClick={() => { 
                     setModalLoginShow(true),  

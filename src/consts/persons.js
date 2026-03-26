@@ -20,8 +20,10 @@ export const usersState = create((set) => ({
 
 export const dataApi = create((set) => ({
     products: [],
+    filterProducts: [],
     setProducts: ((datas) => set({products: datas})),
-    filterProducts: ((toFilter) => set(state => ({products: 
-        state.products.filter(product => product.title.some(toFilter))
+    filterFromProducts: ((wordToFilter) => set(state => ({filterProducts: 
+        state.products.filter(product => product.title.includes(wordToFilter))
     }))),
+    resetFilterProducts: (() => set(state => ({filterProducts: []})))
 }))
