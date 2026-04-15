@@ -5,7 +5,7 @@ export function FilterProducts(){
 
     const [filters, setFilters] = useState('')
 
-    function productsToFilter(){
+    function productsToFilter(inputValue){
         dataApi.getState().filterFromProducts(inputValue)
     }
 
@@ -23,10 +23,10 @@ export function FilterProducts(){
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        onClick={ () => {
-                            if(!inputValue) return
-                            productsToFilter()
-                        } }
+                        onClick={() => {
+                            if(!filters.trim()) return
+                            productsToFilter(filters)
+                        }}
                     >
                         <path
                             strokeLinecap="round"
@@ -40,14 +40,16 @@ export function FilterProducts(){
                     className="peer h-full w-full outline-none text-lg text-gray-700 pr-4 placeholder-gray-400"
                     type="text"
                     value={filters}
-                    onChange={(e) => setFilters(e.target.value)}
+                    onChange={(e) => {
+                        setFilters(e.target.value)
+                    }}
                     placeholder="Buscar productos, marcas, categorías..."
                 />
                 <button
                     className="bg-blue-600 hover:bg-blue-700 text-white h-full px-8 font-medium transition-colors duration-200"
-                    onClick={ () =>{
-                        if(!inputValue) return
-                        productsToFilter()
+                    onClick={() =>{
+                        if(!filters.trim()) return
+                        productsToFilter(filters)
                     }}
                 >
                     Buscar
