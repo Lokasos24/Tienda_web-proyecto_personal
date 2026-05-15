@@ -1,0 +1,18 @@
+<input
+id="searchBar"
+class="peer h-full w-full outline-none text-lg text-gray-700 pr-4 placeholder-gray-400"
+type="text"
+placeholder="Buscar productos, marcas, categorías..."
+/>
+
+<script>
+    import { dataApi } from "../consts/persons"
+
+    const searchBar = document.getElementById('searchBar')
+    const data = dataApi
+    let state = {}
+    searchBar?.addEventListener('input', (event) => {
+        const getTarget = event.target as HTMLInputElement
+        console.log(getTarget.value)
+    })
+</script>
